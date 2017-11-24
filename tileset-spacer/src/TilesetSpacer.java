@@ -66,8 +66,8 @@ public class TilesetSpacer
 				for (int i = tilesX - 1; i >= 0; i--)
 					for (int j = tilesY - 1; j >= 0; j--)
 					{
-						int shiftX = (i + 1) * borderSize;
-						int shiftY = (j + 1) * borderSize;
+						int shiftX = borderSize + i * borderSize * 2;
+						int shiftY = borderSize + j * borderSize * 2;
 						
 						int imageX = i * tileWidth;
 						int imageY = j * tileHeight;
@@ -93,7 +93,8 @@ public class TilesetSpacer
 								for (int l = 0; l < tileHeight; l++)
 									smearRight(newImage, newX + k, newY + l);
 							}
-							else //smear at top and bottom
+							
+							//smear at top and bottom
 							{
 								smearUp(newImage, newX + k, newY);
 								smearDown(newImage, newX + k, newY + tileHeight - 1);
