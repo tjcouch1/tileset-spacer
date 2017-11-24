@@ -1,3 +1,5 @@
+*.png
+
 .metadata
 bin/
 tmp/
