@@ -63,7 +63,7 @@ public class TilesetSpacer
 				Graphics2D newImCanvas = newImage.createGraphics();
 				
 				//space out and border tiles
-				for (int i = tilesX; i >= 0; i--)
+				for (int i = tilesX - 1; i >= 0; i--)
 					for (int j = tilesY - 1; j >= 0; j--)
 					{
 						int shiftX = (i + 1) * borderSize;
@@ -81,26 +81,34 @@ public class TilesetSpacer
 						//smear borders
 						for (int k = 0; k < tileWidth; k++)
 						{
-							//smear left all along height and corners
-							if (k == 0 || k == tileWidth - 1)
+							//smear left all along height
+							if (k == 0)
 							{
 								for (int l = 0; l < tileHeight; l++)
-								{
-									
-								}
+									smearLeft(newImage, newX + k, newY + l);
 							}
-							//smear right all along height and corners
+							//smear right all along height
 							else if (k == tileWidth - 1)
 							{
 								for (int l = 0; l < tileHeight; l++)
-								{
-									
-								}
+									smearRight(newImage, newX + k, newY + l);
 							}
 							else //smear at top and bottom
 							{
-								
+								smearUp(newImage, newX + k, newY);
+								smearDown(newImage, newX + k, newY + tileHeight - 1);
 							}
+						}
+						//smear corners
+						for (int k = 0; k < borderSize; k++)
+						{
+							System.out.println(Integer.toBinaryString(newImage.getRGB(newX, newY - (k + 1))));
+							//top
+							smearLeft(newImage, newX, newY - (k + 1));
+							smearRight(newImage, newX + tileWidth - 1, newY - (k + 1));
+							//bottom
+							smearLeft(newImage, newX, newY + tileHeight - 1 + (k + 1));
+							smearRight(newImage, newX + tileWidth - 1, newY + tileHeight - 1 + (k + 1));
 						}
 					}
 				
@@ -129,5 +137,28 @@ public class TilesetSpacer
 	{
 		destImg.setRGB(destX, destY, srcImg.getRGB(srcX, srcY));
 	}
-
+	
+	public static void smearLeft(BufferedImage image, int x, int y)
+	{
+		for (int i = 0; i < borderSize; i++)
+		copyPixel(image, x - (i + 1), y, image, x, y);
+	}
+	
+	public static void smearRight(BufferedImage image, int x, int y)
+	{
+		for (int i = 0; i < borderSize; i++)
+		copyPixel(image, x + (i + 1), y, image, x, y);
+	}
+	
+	public static void smearUp(BufferedImage image, int x, int y)
+	{
+		for (int i = 0; i < borderSize; i++)
+		copyPixel(image, x, y - (i + 1), image, x, y);
+	}
+	
+	public static void smearDown(BufferedImage image, int x, int y)
+	{
+		for (int i = 0; i < borderSize; i++)
+		copyPixel(image, x, y + (i + 1), image, x, y);
+	}
 }
