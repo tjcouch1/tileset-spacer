@@ -27,6 +27,11 @@ public class TilesetSpacer
 	
 	public static void main(String[] args)
 	{
+		System.out.println("Tileset Spacer by TJ Couch\n" + 
+				"Tile Width: " + tileWidth + "\n" + 
+				"Tile Height: " + tileHeight + "\n" + 
+				"Border Size: " + borderSize + "\n\n");
+		
 		// run program for every file input
 		for (int f = 0; f < args.length; f++)
 		{
@@ -103,7 +108,6 @@ public class TilesetSpacer
 						//smear corners
 						for (int k = 0; k < borderSize; k++)
 						{
-							System.out.println(Integer.toBinaryString(newImage.getRGB(newX, newY - (k + 1))));
 							//top
 							smearLeft(newImage, newX, newY - (k + 1));
 							smearRight(newImage, newX + tileWidth - 1, newY - (k + 1));
@@ -132,6 +136,8 @@ public class TilesetSpacer
 				}
 			}
 		}
+		
+		System.out.println("Done.");
 	}
 	
 	public static void copyPixel(BufferedImage destImg, int destX, int destY, BufferedImage srcImg, int srcX, int srcY)
@@ -142,24 +148,24 @@ public class TilesetSpacer
 	public static void smearLeft(BufferedImage image, int x, int y)
 	{
 		for (int i = 0; i < borderSize; i++)
-		copyPixel(image, x - (i + 1), y, image, x, y);
+			copyPixel(image, x - (i + 1), y, image, x, y);
 	}
 	
 	public static void smearRight(BufferedImage image, int x, int y)
 	{
 		for (int i = 0; i < borderSize; i++)
-		copyPixel(image, x + (i + 1), y, image, x, y);
+			copyPixel(image, x + (i + 1), y, image, x, y);
 	}
 	
 	public static void smearUp(BufferedImage image, int x, int y)
 	{
 		for (int i = 0; i < borderSize; i++)
-		copyPixel(image, x, y - (i + 1), image, x, y);
+			copyPixel(image, x, y - (i + 1), image, x, y);
 	}
 	
 	public static void smearDown(BufferedImage image, int x, int y)
 	{
 		for (int i = 0; i < borderSize; i++)
-		copyPixel(image, x, y + (i + 1), image, x, y);
+			copyPixel(image, x, y + (i + 1), image, x, y);
 	}
 }
