@@ -28,7 +28,7 @@ public class TilesetSpacer
 	public static void main(String[] args)
 	{
 		System.out.println("Tileset Spacer by TJ Couch\n" + "Tile Width: " + tileWidth + "\n" + "Tile Height: "
-				+ tileHeight + "\n" + "Border Size: " + borderSize + "\n\n");
+				+ tileHeight + "\n" + "Border Size: " + borderSize + "\n");
 
 		// run program for every file input
 		for (int f = 0; f < args.length; f++)
@@ -120,13 +120,25 @@ public class TilesetSpacer
 				// free up the graphics
 				newImCanvas.dispose();
 
-				// save new image dir/name-spaced.ext
+				// save old image dir/name-original.ext, save new image
+				String originalFileName = args[f];
+				String fileName = originalFileName;
+				int divider = fileName.lastIndexOf('.');
+				String fileType = fileName.substring(divider + 1);
+				originalFileName = originalFileName.substring(0, divider) + "-original." + originalFileName.substring(divider + 1);
+				
 				try
 				{
-					String fileName = args[f];
-					int divider = fileName.lastIndexOf('.');
-					String fileType = fileName.substring(divider + 1);
-					fileName = fileName.substring(0, divider) + "-spaced." + fileName.substring(divider + 1);
+					ImageIO.write(image, fileType, new File(originalFileName));
+					System.out.println("Saved " + originalFileName);
+				}
+				catch (IOException e)
+				{
+					System.out.println(e);
+				}
+				
+				try
+				{
 					ImageIO.write(newImage, fileType, new File(fileName));
 					System.out.println("Saved " + fileName);
 				}
