@@ -1,5 +1,4 @@
 @echo off
-IF "%*" == "" GOTO Done
-java -jar C:\Users\catsu\Documents\tileset-spacer\build\tileset-spacer.jar %*
+java -jar tileset-spacer.jar %*
 :Done
 pause
